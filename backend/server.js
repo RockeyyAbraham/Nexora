@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import dashRoutes from './routes/dashRoutes.js';
 // Route imports
 // import productRoutes from './routes/productRoutes.js'
 // import orderRoutes from './routes/orderRoutes.js'  
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/dashboard', dashRoutes);
 // app.use('/api/products', productRoutes)
 // app.use('/api/orders', orderRoutes)
 app.use('/api/users', userRoutes)
