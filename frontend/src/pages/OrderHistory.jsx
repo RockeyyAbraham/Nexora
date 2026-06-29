@@ -12,7 +12,7 @@ const STATUS_COLORS = {
 };
 
 const OrderHistory = () => {
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -21,7 +21,7 @@ const OrderHistory = () => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get('/api/orders/myorders', {
-          headers: { Authorization: `Bearer ${user.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(data);
       } catch (err) {
@@ -34,7 +34,7 @@ const OrderHistory = () => {
     };
 
     fetchOrders();
-  }, [user.token]);
+  }, [token]);
 
   if (loading) {
     return (

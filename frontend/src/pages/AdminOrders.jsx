@@ -14,7 +14,7 @@ const STATUS_COLORS = {
 };
 
 const AdminOrders = () => {
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -25,7 +25,7 @@ const AdminOrders = () => {
     const fetchOrders = async () => {
       try {
         const { data } = await axios.get('/api/orders', {
-          headers: { Authorization: `Bearer ${user.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(data);
       } catch (err) {
@@ -36,7 +36,7 @@ const AdminOrders = () => {
     };
 
     fetchOrders();
-  }, [user.token]);
+  }, [token]);
 
   const handleStatusChange = async (orderId, newStatus) => {
     setUpdatingId(orderId);
@@ -44,7 +44,7 @@ const AdminOrders = () => {
       const { data } = await axios.put(
         `/api/orders/${orderId}/status`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${user.token}` } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setOrders((prev) =>
         prev.map((o) => (o._id === orderId ? { ...o, status: data.status } : o))

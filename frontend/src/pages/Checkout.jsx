@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const Checkout = () => {
     const { cartItems, clearCart } = useContext(CartContext);
-    const { user } = useContext(AuthContext);
+    const { user, token } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -59,7 +59,7 @@ const Checkout = () => {
         try {
             setLoading(true);
             await axios.post('/api/orders', orderPayload, {
-                headers: { Authorization: `Bearer ${user.token}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             clearCart();
             navigate('/orders');
