@@ -43,18 +43,20 @@ export default function Login() {
 
   // Styles defined as plain JS objects for inline-styling
   const containerStyle = {
-    backgroundColor: '#e5eeff',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     display: 'flex',
-    minHeight: '100vh',
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     padding: '1rem',
     backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMFN5-8EpUp4jqLAjVpJzkltu5_KvAI2um6gig6t7mz3SkZkd-FjZJxjlL7LNbvk_FqCF-Rov7OxTblzTWMKWaf9_1iPdx34ZC1uBLRZCUP67IxU9LXsBj4GClVJEmB8VRgLuW_UguqCVVwBb0X5DFJdC0arfcpGiAQfyueFcJPkhcb2fsMWhWP2xhFj-mtGntPIcAQKPu5O4lZfhJdmFciG5cqZRmZyhie2WypWw3a-IuWJEx7Rxi7oHfwG1OludzmrE8LhuzXJQ6")',
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    backgroundAttachment: 'fixed',
     backgroundRepeat: 'no-repeat',
+    overflow: 'auto',
     boxSizing: 'border-box'
   };
 

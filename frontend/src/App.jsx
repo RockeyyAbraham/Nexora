@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -18,6 +18,7 @@ import AdminDash from './pages/AdminDash';
 
 export default function App() {
   const { user } = useAuth();
+  const { pathname } = useLocation();
 
   const defaultPath = user
     ? user.role === 'admin'
@@ -25,9 +26,11 @@ export default function App() {
       : '/products'
     : '/login';
 
+  const hideNavbar = pathname === '/login' || pathname === '/register';
+
   return (
     <>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Navigate to={defaultPath} replace />} />
 
