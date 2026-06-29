@@ -24,7 +24,7 @@ const AdminOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get('/api/orders', {
+        const { data } = await axios.get('http://localhost:5000/api/orders', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(data);
@@ -42,7 +42,7 @@ const AdminOrders = () => {
     setUpdatingId(orderId);
     try {
       const { data } = await axios.put(
-        `/api/orders/${orderId}/status`,
+        `http://localhost:5000/api/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
