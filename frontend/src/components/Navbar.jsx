@@ -3,12 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
+  const location = useLocation();
+  const { pathname } = location;
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
-  if (pathname === '/login' || pathname === '/register') {
+  if (pathname.startsWith('/admin') || pathname === '/login' || pathname === '/register') {
     return null;
   }
 

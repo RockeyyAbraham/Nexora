@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const statusBadgeStyle = (status) => {
   switch (status) {
@@ -73,12 +75,44 @@ export default function AdminDashboard() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [viewAllHovered, setViewAllHovered] = useState(false);
 
-  // Suppress unused setter warnings until API calls are added
-  void setTotalUsers;
-  void setTotalProducts;
-  void setTotalOrders;
-  void setTotalRevenue;
-  void setRecentOrders;
+  const { token } = useAuth();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/dashboard/stats', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setTotalUsers(data.totalUsers);
+        setTotalProducts(data.totalProducts);
+        setTotalOrders(data.totalOrders);
+        setTotalRevenue(data.totalRevenue);
+        setRecentOrders(data.recentOrders);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (token) {
+      fetchStats();
+    }
+  }, [token]);
+
+  // Adjust root layout to take full width on admin dashboard
+  useEffect(() => {
+    const rootEl = document.getElementById('root');
+    if (rootEl) {
+      rootEl.style.width = '100%';
+      rootEl.style.maxWidth = 'none';
+      rootEl.style.borderInline = 'none';
+    }
+    return () => {
+      if (rootEl) {
+        rootEl.style.width = '';
+        rootEl.style.maxWidth = '';
+        rootEl.style.borderInline = '';
+      }
+    };
+  }, []);
 
   // Inline styling definitions
   const containerStyle = {
@@ -86,7 +120,7 @@ export default function AdminDashboard() {
     display: 'flex',
     overflow: 'hidden',
     fontFamily: "'Inter', sans-serif",
-    backgroundColor: '#f8f9ff',
+    backgroundColor: '#f5f7fa',
     color: '#0b1c30',
     boxSizing: 'border-box'
   };
@@ -196,7 +230,7 @@ export default function AdminDashboard() {
     marginLeft: '256px',
     overflowY: 'auto',
     minHeight: '100vh',
-    backgroundColor: '#f8f9ff',
+    backgroundColor: '#f5f7fa',
     boxSizing: 'border-box'
   };
 
@@ -212,7 +246,7 @@ export default function AdminDashboard() {
     position: 'sticky',
     top: 0,
     zIndex: 40,
-    backgroundColor: '#f8f9ff',
+    backgroundColor: '#f5f7fa',
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
     boxSizing: 'border-box'
   };
@@ -227,7 +261,7 @@ export default function AdminDashboard() {
 
   const statsGridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '24px',
     marginBottom: '24px'
   };

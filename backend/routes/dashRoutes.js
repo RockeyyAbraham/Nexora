@@ -5,5 +5,6 @@ import { protect, admin } from '../middleware/authMiddleware.js';
 const router = Router();
 
 router.get('/', protect, admin, getDashboardStats);
+router.get('/stats', protect, admin, getDashboardStats);
 
 export default router;
