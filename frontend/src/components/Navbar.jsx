@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -6,6 +6,11 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  if (pathname === '/login' || pathname === '/register') {
+    return null;
+  }
 
   const handleLogout = () => {
     logout();

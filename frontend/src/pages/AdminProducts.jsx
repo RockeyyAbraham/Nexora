@@ -11,10 +11,6 @@ const AdminProducts = () => {
   const [category, setCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
@@ -27,10 +23,15 @@ const AdminProducts = () => {
     }
   };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const addProduct = async (e) => {
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("token");
       await axios.post("http://localhost:5000/api/products", {
         title,
         description,
@@ -38,6 +39,10 @@ const AdminProducts = () => {
         stock,
         category,
         imageUrl,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       alert("Product Added Successfully");
@@ -60,8 +65,14 @@ const AdminProducts = () => {
     if (!window.confirm("Delete this product?")) return;
 
     try {
+      const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:5000/api/products/${id}`
+        `http://localhost:5000/api/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
       alert("Product Deleted");
