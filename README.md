@@ -132,5 +132,6 @@ npm install
 npm run dev
 ```
 
+PROJECT LINK--http://34.41.145.183/
 
 This project is developed for educational purposes as part of a college MERN Stack mini project.
